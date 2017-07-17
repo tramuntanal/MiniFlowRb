@@ -1,7 +1,7 @@
 # MiniFlowRb
 Basic TensorFlow version in Ruby to learn two concepts at the heart of neural networks - backpropagation and differentiable graphs.
 
-This DNN library is built following the MiniFlow lesson in the Self-driving Car Nanodegree at Udacity.
+This Neural Network library is built following the MiniFlow lesson in the Self-driving Car Nanodegree at Udacity.
 The introduction in the lesson is as follows:
 
 > Backpropagation is the process by which neural networks update the weights of the network over time.
