@@ -3,10 +3,6 @@ module MiniFlow
 
     describe Linear do
       describe "on forward" do
-        before(:each) do
-          @x, @y= Input.new, Input.new
-          @mul= Mul.new(@x, @y)
-        end
 
         it %Q[should return 12.7 when feed_dict = {
 	x: 6,
