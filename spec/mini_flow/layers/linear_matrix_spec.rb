@@ -15,18 +15,18 @@ module MiniFlow
           b = np.array([-3., -5])
         ] do
           # construct graph
-          inputs, weights, bias= Input.new(), Input.new, Input.new()
-          f= LinearMatrix.new([inputs], weights, bias)
+          input, weights, bias= Input.new(), Input.new, Input.new()
+          f= LinearMatrix.new([input], weights, bias)
           # declare feeded inputs
           x= Matrix[
             [-1.0, -2.0],
-            [-1, -2]]
+            [-1.0, -2.0]]
           w= Matrix[
-            [2.0, -3],
-            [2.0, -3]]
-          b_vect= [-3.0, -5]
+            [2.0, -3.0],
+            [2.0, -3.0]]
+          b_vect= [-3.0, -5.0]
           b= Matrix.rows([b_vect,b_vect], copy: false)
-          feed_dict = {inputs => x, weights => w, bias => b}
+          feed_dict = {input => x, weights => w, bias => b}
 
           graph= MiniFlow.topological_sort(feed_dict)
           output = MiniFlow.forward_pass(f, graph)
