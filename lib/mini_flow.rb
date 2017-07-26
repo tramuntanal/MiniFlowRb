@@ -6,6 +6,8 @@ require 'mini_flow/layers/linear'
 require 'mini_flow/layers/linear_matrix'
 require 'mini_flow/layers/sigmoid'
 
+require 'mini_flow/layers/loss/mse'
+
 require 'mini_flow/topological_sort'
 require 'mini_flow/forward_pass'
 
