@@ -49,8 +49,8 @@ module MiniFlow
               mse.backward
 
               y_grad= mse.gradients[y]
-              a_grad= mse.gradients[a]
               expect(y_grad).to eq(Vector[-2.333333333333333, -2.0, -4.666666666666666])
+              a_grad= mse.gradients[a]
               expect(a_grad).to eq(Vector[2.333333333333333, 2.0, 4.666666666666666])
             end
           end
