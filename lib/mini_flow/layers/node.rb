@@ -6,6 +6,7 @@ module MiniFlow
   class Node
     attr_reader :following_nodes
     attr_accessor :value
+    attr_reader :gradients
 
     def initialize(previous_nodes=[])
       # Node(s) from which this Node receives values
@@ -19,6 +20,9 @@ module MiniFlow
       #Each node will eventually calculate a value that represents its output.
       #Let's initialize the value to None to indicate that it exists but hasn't been set yet.
       @value= nil
+      # Keys are the inputs to this node and their values are the partial
+      # derivatives of this node with respect to that input.
+      @gradients = {}
     end
 
     # Forward propagation.
