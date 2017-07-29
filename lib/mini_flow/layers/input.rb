@@ -19,6 +19,17 @@ module MiniFlow
       def forward(value=nil)
         @value= value if value
       end
+
+      # An Input layer has no inputs so the gradient (derivative) is zero.
+      # 
+      # Anyway, weights and bias may be inputs, so we need to sum
+      # the gradient from output gradients.
+      #
+      def backward
+        @gradients[self]= 0.0
+        @following_nodes.each {|n| @gradients[self]+= n.gradients[self]}
+      end
+
     end
   end
 end
