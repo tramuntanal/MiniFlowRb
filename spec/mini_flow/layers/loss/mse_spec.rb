@@ -16,7 +16,7 @@ module MiniFlow
               # set_value_to_input
               y.value= [1, 2, 3]
               a.value= [4.5, 5, 10]
-              # configure newron
+              # configure neuron
               mse= Mse.new(y, a)
 
               output= mse.forward

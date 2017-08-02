@@ -1,31 +1,31 @@
 module MiniFlow
 
-  # input_nodesort generic nodes in topological order using Kahn's Algorithm.
+  # Sort generic nodes in topological order using Kahn's Algorithm.
   # @param `feed_dict`: A dictionary where the key is a `Input` node and the
   #   value is the respective value feed to that node.
   # @returns a list of sorted nodes.
   def self.topological_sort(feed_dict)
-    input_neurons = feed_dict.keys.clone
+    input_nodes = feed_dict.keys.clone
 
     # build the graph
     graph= {}
-    neurons= input_neurons.clone
-    while neurons.any?
-      # remove first neuron
-      n= neurons.shift
+    nodes= input_nodes.clone
+    while nodes.any?
+      # remove first node
+      n= nodes.shift
 
       graph[n]= {in: [], out: []} unless graph.include?(n)
       n.following_nodes.each { |m|
         graph[m]= {in: [], out: []} unless graph.include?(m)
         graph[n][:out] << m
         graph[m][:in] <<n
-        neurons << m
+        nodes << m
       }
     end
 
     # sort the graph
     list= []
-    input_nodes= input_neurons.clone
+    input_nodes= input_nodes.clone
     while input_nodes.any?
       n= input_nodes.pop
 
