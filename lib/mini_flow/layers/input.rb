@@ -28,8 +28,7 @@ module MiniFlow
       def backward
         @gradients[self]= case @value
         when Vector, Array
-          ary= Array.new(@value.size) {0.0}
-          Vector.elements(ary)
+          Vector.zero(@value.size)
         when Matrix
           Matrix.zero(@value.row_count, @value.column_count)
         else

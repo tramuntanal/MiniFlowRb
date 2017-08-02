@@ -7,8 +7,28 @@ class Matrix
     row_count + column_count
   end
 
+  # @returns An array with the counts of the rows and columns.
   def sizes
     [row_count, column_count]
   end
   alias_method :dimensions, :sizes
+
+  # @returns An array with the sums of the rows of the Matrix.
+  def inner_row_sum
+    Vector[*row_vectors.collect {|row| row.element_sum}]
+  end
+
+end
+
+class Vector
+  # This method is in Ruby's 2.4.1 documentation but inexistent in the runtime.
+  #
+  # @return A new Vector with *num_elems* size and all elements set to zero.
+  def self.zero(num_elems)
+    Vector[*num_elems.times.collect {0.0}]
+  end
+  # @return The sum of the Vector elements.
+  def element_sum
+    to_a.inject(:+)
+  end
 end

@@ -22,14 +22,15 @@ module MiniFlow
     #
     #
     class LinearMatrix < Node
-      def initialize(inputs, weights, bias)
-        super(inputs)
+      def initialize(input, weights, bias)
         # NOTE: The weights and bias properties here are not
         # numbers, but rather references to other neurons.
         # The weight and bias values are stored within the
         # respective neurons.
+        @input= input
         @weights= weights
         @bias= bias
+        super([@input, @weights, @bias])
       end
 
       def forward
@@ -38,6 +39,30 @@ module MiniFlow
         b= @bias.value
         @value= (x * w) + b
       end
+
+      # Calculates the gradient based on the output values
+      def backward
+        # Initialize a partial for each of the inbound_layers.
+        @gradients[@input]= Matrix.zero(*@input.value.sizes)
+        @gradients[@weights]= Matrix.zero(*@weights.value.sizes)
+        @gradients[@bias]= Vector.zero(@bias.value.size)
+
+        # Cycle through the outputs.
+        # The gradient will change depending on each output,
+        # so the gradients are summed over all outputs.
+        @following_nodes.each {|n|
+          # Get the partial of the cost with respect to this layer.
+          grad_cost= n.gradients[self]
+
+          # Set the partial of the loss with respect to this layer's inputs.
+          @gradients[@input]+= grad_cost * @weights.value.t
+          # Set the partial of the loss with respect to this layer's weights.
+          @gradients[@weights]+= @input.value.t * grad_cost
+          # Set the partial of the loss with respect to this layer's bias.
+          @gradients[@bias]+= grad_cost.inner_row_sum
+        }
+      end
     end
+
   end
 end
