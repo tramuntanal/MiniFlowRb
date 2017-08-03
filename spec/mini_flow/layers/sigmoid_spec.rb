@@ -58,9 +58,7 @@ module MiniFlow
 
             # pass forward and backward
             feed_dict = {input => input_value, y => Matrix[[1, 2],[4,5]]}
-            sorted_neurons= MiniFlow.topological_sort(feed_dict)
-            MiniFlow.forward_pass(mse, sorted_neurons)
-            MiniFlow.backward_pass(sorted_neurons)
+            MiniFlow.fit(mse, feed_dict)
 
             expect(s.gradients.any?).to be true
             mtx= Matrix[

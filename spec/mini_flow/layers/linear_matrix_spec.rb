@@ -21,10 +21,9 @@ module MiniFlow
           construct_graph
           build_feed_dict
 
-          graph= MiniFlow.topological_sort(@feed_dict)
-          output = MiniFlow.forward_pass(@f, graph)
+          MiniFlow.sort_and_forward(@f, @feed_dict)
 
-          expect(output).to eq(Matrix[[1.0],[1.0]])
+          expect(@f.value).to eq(Matrix[[1.0],[1.0]])
         end
       end
       context "on backwards" do
@@ -34,7 +33,7 @@ module MiniFlow
         end
         describe "whatever the values of the input nodes, when there are no outbound nodes, then the gradients" do
           it "should be zero" do
-            forward_and_backward(@f)
+            MiniFlow.fit(@f, @feed_dict)
 
             expect(@f.gradients[@input]).to eq(Matrix[[0, 0],[-0.0, 0]])
             expect(@f.gradients[@weights]).to eq(Matrix[[0],[0]])
@@ -46,7 +45,7 @@ module MiniFlow
             s= Sigmoid.new(@f)
             s.gradients[@f]= Matrix[[1], [2]]
 
-            forward(s)
+            MiniFlow.sort_and_forward(s, @feed_dict)
             @f.backward
 
             expect(@f.gradients[@input]).to eq(Matrix[[2, -3],[4, -6]])
@@ -66,15 +65,6 @@ module MiniFlow
       end
       def build_feed_dict
         @feed_dict = {@input => X, @weights => W, @bias => B}
-      end
-      def forward(output_node)
-        graph= MiniFlow.topological_sort(@feed_dict)
-        MiniFlow.forward_pass(output_node, graph)
-        graph
-      end
-      def forward_and_backward(output_node)
-        graph= forward(output_node)
-        MiniFlow.backward_pass(graph)
       end
 
     end
