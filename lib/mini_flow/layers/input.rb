@@ -30,7 +30,7 @@ module MiniFlow
         when Vector, Array
           Vector.zero(@value.size)
         when Matrix
-          Matrix.zero(@value.row_count, @value.column_count)
+          Matrix.zero(@value.row_count, @value.column_size)
         else
           0.0
         end
