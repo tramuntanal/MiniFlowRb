@@ -12,6 +12,7 @@ require 'mini_flow/layers/loss/mse'
 require 'mini_flow/topological_sort'
 require 'mini_flow/forward_pass'
 require 'mini_flow/backward_pass'
+require 'mini_flow/sgd'
 
 require 'mini_flow/examples/examples'
 
