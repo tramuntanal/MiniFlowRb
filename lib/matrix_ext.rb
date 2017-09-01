@@ -4,12 +4,12 @@ class Matrix
   # The size of a matrix is defined by the number of rows and columns that it contains.
   # [from wikipedia](https://en.wikipedia.org/wiki/Matrix_(mathematics)#Definition)
   def size
-    row_count + column_count
+    row_count + column_size
   end
 
   # @returns An array with the counts of the rows and columns.
   def sizes
-    [row_count, column_count]
+    [row_count, column_size]
   end
   alias_method :dimensions, :sizes
 
@@ -18,6 +18,12 @@ class Matrix
     Vector[*row_vectors.collect {|row| row.element_sum}]
   end
 
+  # @returns A new Matrix which has the same content as _current_, but without the given column.
+  def remove_column(idx)
+    arrays= to_a.transpose
+    arrays.delete_at(idx)
+    Matrix.rows(arrays.transpose)
+  end
 end
 
 class Vector

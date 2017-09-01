@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 module MiniFlow
   describe "MiniFlow.backward_pass with Loss::Mse" do

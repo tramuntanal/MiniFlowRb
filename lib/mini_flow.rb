@@ -13,6 +13,8 @@ require 'mini_flow/topological_sort'
 require 'mini_flow/forward_pass'
 require 'mini_flow/backward_pass'
 
+require 'mini_flow/examples/examples'
+
 module MiniFlow
   def self.sort_and_forward(output_node, feed_dict)
     graph= MiniFlow.topological_sort(feed_dict)

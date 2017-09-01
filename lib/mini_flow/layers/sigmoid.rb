@@ -28,7 +28,7 @@ module MiniFlow
       def backward
         # Initialize the gradients to 0.
         @previous_nodes.collect {|n|
-          rows, cols= n.value.row_count, n.value.column_count
+          rows, cols= n.value.row_count, n.value.column_size
           @gradients[n]= Matrix.zero(rows, cols)
         }
 
@@ -43,7 +43,7 @@ module MiniFlow
           # Set the partial of the loss with respect to this layer's inputs.
           input_value= @previous_nodes[0].value
           s_mtx= sigmoid(input_value)
-          ones_mtx= Matrix.build(s_mtx.row_count, s_mtx.column_count) {1}
+          ones_mtx= Matrix.build(s_mtx.row_count, s_mtx.column_size) {1}
           @gradients[@previous_nodes[0]]+= grad_cost*(s_mtx*(ones_mtx-s_mtx))
         }
       end
