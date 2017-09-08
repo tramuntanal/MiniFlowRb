@@ -25,7 +25,7 @@ module MiniFlow
           case @y.value
           when Matrix
             @diffs= @y.value - @a.value
-            @sum= @diffs ** 2
+            @sum= @diffs.transpose * @diffs
           when Array, Vector
             @diffs= []
             @y.value.zip(@a.value).each do |y_val, a_val|

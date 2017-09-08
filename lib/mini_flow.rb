@@ -23,6 +23,12 @@ module MiniFlow
     graph
   end
 
+  def self.forward_and_backward(graph)
+    MiniFlow.forward_pass(graph.last, graph)
+    MiniFlow.backward_pass(graph)
+    graph
+  end
+
   # Performs:
   # - a topological sort
   # - a forward pass

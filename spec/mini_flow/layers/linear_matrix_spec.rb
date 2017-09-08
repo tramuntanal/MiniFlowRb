@@ -1,4 +1,4 @@
-require 'matrix'
+require 'test_helper'
 module MiniFlow
   module Layers
 
@@ -9,7 +9,7 @@ module MiniFlow
       W= Matrix[ [2.0],[-3.0] ]
       #      B_VECT= Vector[-3.0]
       #      B= Matrix.rows([B_VECT,B_VECT], copy: false)
-      B= Vector[-3.0, -3.0]
+      B= Matrix[[-3.0, -3.0]].transpose
 
 
       context "on forward" do
@@ -37,7 +37,7 @@ module MiniFlow
 
             expect(@f.gradients[@input]).to eq(Matrix[[0, 0],[-0.0, 0]])
             expect(@f.gradients[@weights]).to eq(Matrix[[0],[0]])
-            expect(@f.gradients[@bias]).to eq(Vector[0.0,0.0])
+            expect(@f.gradients[@bias]).to eq(Matrix[[0.0],[0.0]])
           end
         end
         describe "Given there is a sigmoid outbound node" do
@@ -50,7 +50,7 @@ module MiniFlow
 
             expect(@f.gradients[@input]).to eq(Matrix[[2, -3],[4, -6]])
             expect(@f.gradients[@weights]).to eq(Matrix[[-3],[-6]])
-            expect(@f.gradients[@bias]).to eq(Vector[1.0, 2.0])
+            expect(@f.gradients[@bias]).to eq(Matrix[[1], [2]])
           end
         end
       end

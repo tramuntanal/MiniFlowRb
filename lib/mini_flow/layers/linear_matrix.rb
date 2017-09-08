@@ -45,7 +45,12 @@ module MiniFlow
         # Initialize a partial for each of the inbound_layers.
         @gradients[@input]= Matrix.zero(*@input.value.sizes)
         @gradients[@weights]= Matrix.zero(*@weights.value.sizes)
-        @gradients[@bias]= Vector.zero(@bias.value.size)
+        bias_gradients= if @bias.value.kind_of? Matrix
+          Matrix.zero(*@bias.value.dimensions)
+        else
+          Vector.zero(@bias.value.size)
+        end
+        @gradients[@bias]= bias_gradients
 
         # Cycle through the outputs.
         # The gradient will change depending on each output,
@@ -59,7 +64,13 @@ module MiniFlow
           # Set the partial of the loss with respect to this layer's weights.
           @gradients[@weights]+= @input.value.t * grad_cost
           # Set the partial of the loss with respect to this layer's bias.
-          @gradients[@bias]+= grad_cost.inner_row_sum
+          row_sum= if @gradients[@bias].kind_of? Matrix
+            tmp= grad_cost.inner_row_sum
+            Matrix.build(*@gradients[@bias].dimensions) {|r,c| tmp[r]}
+          else
+            grad_cost.inner_row_sum
+          end
+          @gradients[@bias]+= row_sum
         }
       end
     end

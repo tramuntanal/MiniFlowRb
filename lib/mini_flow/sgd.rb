@@ -8,10 +8,10 @@ module MiniFlow
   # trainable.
   #
   # @param inputs: the trainables.
-  # @param learning_rate: the rate at wich the value is updated in the direction
+  # @param learning_rate: (defaults to 0.001) The rate at wich the value is updated in the direction
   #   of the partial of the cost with respect to the input.
   #
-  def self.apply_sgd(inputs, learning_rate)
+  def self.apply_sgd(inputs, learning_rate=0.001)
     inputs.each {|input|
       input.value-= learning_rate * input.gradients[input]
     }
