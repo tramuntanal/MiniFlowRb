@@ -14,14 +14,15 @@ The introduction in the lesson is as follows:
 To execute the MiniFlow stochastic gradient descent algorithm with the Housing Values in Suburbs of Boston
 go inside the lib/ dir and execute:
 ```
-$ ruby boston_housing_values.rb 5
+$ cd lib
+lib$ ruby boston_housing_values.rb 5
 Epoch: 1, Loss: 484.843
 Epoch: 2, Loss: 412.195
 Epoch: 3, Loss: 407.268
 Epoch: 4, Loss: 402.490
 Epoch: 5, Loss: 397.644
 ```
-where 20 is the number of epochs. This argument is optional and defaults to 10 epochs.
+where the 5 argument is the number of epochs. This argument is optional and defaults to 10 epochs.
 
 On each epoch:
 - shuffles all 506 rows on the dataset (overfitting the model)
