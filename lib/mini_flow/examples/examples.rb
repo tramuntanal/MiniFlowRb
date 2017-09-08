@@ -1,4 +1,5 @@
 require 'daru'
+require_relative 'boston_model'
 
 module MiniFlow
   module Examples
@@ -8,7 +9,7 @@ module MiniFlow
     end
     #
     # @return A +hash+ with _:data_ and _:target_ keys. Both Daru::DataFrames.
-    # 
+    #
     # The Boston data frame has 506 rows and 14 columns.
     #This data frame contains the following columns:
     #crim
@@ -57,7 +58,7 @@ module MiniFlow
     #Harrison, D. and Rubinfeld, D.L. (1978) Hedonic prices and the demand for clean air. J. Environ. Economics and Management 5, 81–102.
     #
     #Belsley D.A., Kuh, E. and Welsch, R.E. (1980) Regression Diagnostics. Identifying Influential Data and Sources of Collinearity. New York: Wiley.
-    # 
+    #
     #
     def self.load_boston
       dataframe= Examples.load(File.join(File.dirname(__FILE__), 'Boston.csv'))

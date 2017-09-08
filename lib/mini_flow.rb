@@ -1,20 +1,20 @@
-require 'matrix_ext'
-require 'mini_flow/layers/node'
-require 'mini_flow/layers/input'
-require 'mini_flow/layers/add'
-require 'mini_flow/layers/mul'
-require 'mini_flow/layers/linear'
-require 'mini_flow/layers/linear_matrix'
-require 'mini_flow/layers/sigmoid'
+require_relative 'matrix_ext'
+require_relative 'mini_flow/layers/node'
+require_relative 'mini_flow/layers/input'
+require_relative 'mini_flow/layers/add'
+require_relative 'mini_flow/layers/mul'
+require_relative 'mini_flow/layers/linear'
+require_relative 'mini_flow/layers/linear_matrix'
+require_relative 'mini_flow/layers/sigmoid'
 
-require 'mini_flow/layers/loss/mse'
+require_relative 'mini_flow/layers/loss/mse'
 
-require 'mini_flow/topological_sort'
-require 'mini_flow/forward_pass'
-require 'mini_flow/backward_pass'
-require 'mini_flow/sgd'
+require_relative 'mini_flow/topological_sort'
+require_relative 'mini_flow/forward_pass'
+require_relative 'mini_flow/backward_pass'
+require_relative 'mini_flow/sgd'
 
-require 'mini_flow/examples/examples'
+require_relative 'mini_flow/examples/examples'
 
 module MiniFlow
   def self.sort_and_forward(output_node, feed_dict)
