@@ -1,15 +1,17 @@
 
 module MiniFlow
   module Examples
-    # Example Boston Model Architecture:
-    # Input: 506x13
-    # Linear: X[506,13], W[506,10], b[506]
-    # Sigmoid: [506, 1]
-    # Linear: X[506, 1], W[10,1], b[1]
-    # Cost in: y[506, 1], a[506, 1]
-    # Cost result: [1, 1]
-    #
     class BostonModel
+      # LAYERS serves as a documentation string.
+      # Example Boston Model layers:
+      LAYERS= <<EOLAYERS
+- Input: [506,13]
+- Linear: X[506,13], W[506,10], b[506]
+- Sigmoid: [506, 1]
+- Linear: X[506, 1], W[10,1], b[1]
+- Cost in: y[506, 1], a[506, 1]
+- Cost result: [1, 1]
+EOLAYERS
 
       attr_reader :losses
 
@@ -77,7 +79,6 @@ module MiniFlow
 
             # Step 3
             MiniFlow.apply_sgd(trainables)
-            puts "cost.value: #{cost.value.dimensions}"
             loss+= cost.value.first
           }
           @losses << loss
