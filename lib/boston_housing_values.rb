@@ -24,4 +24,7 @@ end
 epochs= ARGV[0] || 10
 
 model= MiniFlow::Examples::BostonModel.new
-model.run(epochs: epochs.to_i)
+model.fit(epochs: epochs.to_i)
+rs= model.predict([0.00632,18,2.31,0,0.538,6.575,65.2,4.09,1,296,15.3,396.9,4.98])
+
+puts "Prediction: #{rs}"

@@ -18,7 +18,7 @@ module MiniFlow
     end
     def after_executing_it
       @epochs= 10
-      @model.run(epochs: @epochs)
+      @model.fit(epochs: @epochs)
     end
     def loss_should_decrease_after_each_epoch
       from_second_to_last= (1...@epochs)

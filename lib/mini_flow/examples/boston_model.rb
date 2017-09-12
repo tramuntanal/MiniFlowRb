@@ -19,7 +19,7 @@ EOLAYERS
         @dataset= MiniFlow::Examples.load_boston
       end
 
-      def run(epochs: 10, batch_size: 506)
+      def fit(epochs: 10, batch_size: 506)
         df= @dataset
         x_df= df[:data]
 
@@ -55,7 +55,7 @@ EOLAYERS
 
         steps_per_epoch= (n_values / batch_size).to_i
 
-        graph= MiniFlow.topological_sort(feed_dict)
+        @graph= MiniFlow.topological_sort(feed_dict)
         trainables= [w1_mtx_input, b1_vect_input, w2_mtx_input, b2_vect_input]
 
         puts("Total number of examples= #{n_values}")
@@ -75,7 +75,7 @@ EOLAYERS
             y_vect_input.value= y_batch
 
             # Step 2
-            MiniFlow.forward_and_backward(graph)
+            MiniFlow.forward_and_backward(@graph)
 
             # Step 3
             MiniFlow.apply_sgd(trainables)
@@ -84,6 +84,14 @@ EOLAYERS
           @losses << loss
           puts("Epoch: #{idx+1}, Loss:"+" %.3f" % (loss / steps_per_epoch))
         }
+      end
+
+      def predict(features)
+        puts "Nodes:"
+        @graph.each {|node| puts node.class.name}
+        output_node= @graph.last
+        MiniFlow.forward_pass(output_node, @graph)
+        output_node.value
       end
 
       #----------------------------------------------------
