@@ -34,15 +34,4 @@ x_df.each_row_with_index {|row, idx|
   rs= model.predict(row.to_a).first
   dev= rs - y_df[idx]
   puts "Prediction #{idx}: #{rs}, dev: #{dev}"
-
-#  puts ">>>#{model.graph[-4].inspect}"
-  puts ">>>#{model.graph[-3].inspect}"
 }
-#boston= MiniFlow::Examples.load_boston
-#x_df= boston[:data]
-#y_df= boston[:target]
-#x_df.each_row_with_index {|row, idx|
-#  rs= model.predict(row.to_a).first
-#  dev= rs - y_df[idx]
-#  puts "Prediction #{idx}: #{rs}, dev: #{dev}"
-#}
