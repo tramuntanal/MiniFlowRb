@@ -25,6 +25,24 @@ epochs= ARGV[0] || 10
 
 model= MiniFlow::Examples::BostonModel.new
 model.fit(epochs: epochs.to_i)
-rs= model.predict([0.00632,18,2.31,0,0.538,6.575,65.2,4.09,1,296,15.3,396.9,4.98])
+model.print_graph_arch
 
-puts "Prediction: #{rs}"
+boston= MiniFlow::Examples.load_boston
+x_df= boston[:data]
+y_df= boston[:target]
+x_df.each_row_with_index {|row, idx|
+  rs= model.predict(row.to_a).first
+  dev= rs - y_df[idx]
+  puts "Prediction #{idx}: #{rs}, dev: #{dev}"
+
+#  puts ">>>#{model.graph[-4].inspect}"
+  puts ">>>#{model.graph[-3].inspect}"
+}
+#boston= MiniFlow::Examples.load_boston
+#x_df= boston[:data]
+#y_df= boston[:target]
+#x_df.each_row_with_index {|row, idx|
+#  rs= model.predict(row.to_a).first
+#  dev= rs - y_df[idx]
+#  puts "Prediction #{idx}: #{rs}, dev: #{dev}"
+#}

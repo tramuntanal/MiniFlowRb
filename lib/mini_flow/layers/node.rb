@@ -32,5 +32,9 @@ module MiniFlow
       raise NotImplementedError
     end
 
+    def to_s
+      "#{self.class.name}#{@value.dimensions}"
+    end
+
   end
 end

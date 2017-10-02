@@ -14,6 +14,7 @@ module MiniFlow
 EOLAYERS
 
       attr_reader :losses
+      attr_reader :graph
 
       def initialize
         @dataset= MiniFlow::Examples.load_boston
@@ -35,17 +36,17 @@ EOLAYERS
         b2_vect_= Matrix.zero(n_values, 1)
 
         ## Neural network
-        x_mtx_input, y_vect_input= Layers::Input.new(), Layers::Input.new()
+        @x_mtx_input, y_vect_input= Layers::Input.new(), Layers::Input.new()
         w1_mtx_input, b1_vect_input= Layers::Input.new(), Layers::Input.new()
         w2_mtx_input, b2_vect_input= Layers::Input.new(), Layers::Input.new()
 
-        l1= Layers::LinearMatrix.new(x_mtx_input, w1_mtx_input, b1_vect_input)
+        l1= Layers::LinearMatrix.new(@x_mtx_input, w1_mtx_input, b1_vect_input)
         s1= Layers::Sigmoid.new(l1)
         l2= Layers::LinearMatrix.new(s1, w2_mtx_input, b2_vect_input)
         cost= Layers::Loss::Mse.new(y_vect_input, l2)
 
         feed_dict = {
-          x_mtx_input => x_mtx,
+          @x_mtx_input => x_mtx,
           y_vect_input => y_vect,
           w1_mtx_input => w1_mtx_,
           b1_vect_input => b1_vect_,
@@ -71,7 +72,7 @@ EOLAYERS
             x_mtx_batch, y_batch= resample(x_mtx, y_vect, n_samples: batch_size)
 
             # Reset value of X and y Inputs
-            x_mtx_input.value= x_mtx_batch
+            @x_mtx_input.value= x_mtx_batch
             y_vect_input.value= y_batch
 
             # Step 2
@@ -87,13 +88,18 @@ EOLAYERS
       end
 
       def predict(features)
-        puts "Nodes:"
-        @graph.each {|node| puts node.class.name}
-        output_node= @graph.last
+        features_mtx= Matrix.build(506, features.size) {|r,c|
+          features[c]
+        }
+        @x_mtx_input.value= features_mtx
+        output_node= @graph[-2]
         MiniFlow.forward_pass(output_node, @graph)
         output_node.value
       end
 
+      def print_graph_arch
+        @graph.each {|node| puts node.to_s }
+      end
       #----------------------------------------------------
       private
       #----------------------------------------------------
