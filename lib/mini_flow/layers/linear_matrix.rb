@@ -34,7 +34,7 @@ module MiniFlow
       end
 
       def forward
-        x= @previous_nodes.first.value
+        x= @input.value
         w= @weights.value
         b= @bias.value
         @value= (x * w) + b
@@ -73,7 +73,7 @@ module MiniFlow
           @gradients[@bias]+= row_sum
         }
       end
-    end
 
+    end
   end
 end
