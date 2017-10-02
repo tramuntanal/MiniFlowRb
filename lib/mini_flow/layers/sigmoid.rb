@@ -44,8 +44,6 @@ module MiniFlow
           input_value= @previous_nodes[0].value
           s_mtx= sigmoid(input_value)
           ones_mtx= Matrix.build(s_mtx.row_count, s_mtx.column_size) {1}
-          calc= (s_mtx.transpose*(ones_mtx-s_mtx))
-          #          calc= (ones_mtx-s_mtx)
           @gradients[@previous_nodes[0]]+= grad_cost*(s_mtx.transpose*(ones_mtx-s_mtx))
         }
       end
