@@ -18,7 +18,7 @@ module MiniFlow
         node.following_nodes << self
       end
       #Each node will eventually calculate a value that represents its output.
-      #Let's initialize the value to None to indicate that it exists but hasn't been set yet.
+      #Let's initialize the value to +nil+ to indicate that it exists but hasn't been set yet.
       @value= nil
       # Keys are the inputs to this node and their values are the partial
       # derivatives of this node with respect to that input.

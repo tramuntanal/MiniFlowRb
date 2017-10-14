@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    miniflowrb (0.0.1)
+    miniflowrb (0.0.2)
       daru
 
 GEM

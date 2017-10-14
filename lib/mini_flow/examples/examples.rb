@@ -1,5 +1,6 @@
 require 'daru'
 require_relative 'boston_model'
+require_relative 'titanic/model'
 
 module MiniFlow
   module Examples
@@ -8,7 +9,7 @@ module MiniFlow
       Daru::DataFrame.from_csv(filename)
     end
     #
-    # @return A +hash+ with _:data_ and _:target_ keys. Both Daru::DataFrames.
+    # @return A +hash+ with _:data_ (X) and _:target_ (y) keys. Both Daru::DataFrames.
     #
     # The Boston data frame has 506 rows and 14 columns.
     #This data frame contains the following columns:
@@ -68,6 +69,20 @@ module MiniFlow
       medv_col= dataframe['medv']
       dataframe.delete_vector('medv')
       {data: dataframe, target: medv_col}
+    end
+
+    #
+    # 
+    #
+    def self.load_titanic
+      data_frame= Examples.load(File.join(File.dirname(__FILE__), 'titanic', 'train_features.csv'))
+      # remove first column
+#      data_frame.delete_vector('idx')
+
+      train_frame= Examples.load(File.join(File.dirname(__FILE__), 'titanic', 'test_features.csv'))
+      # remove first column
+#      train_frame.delete_vector('idx')
+      {data: data_frame, train: train_frame}
     end
 
   end

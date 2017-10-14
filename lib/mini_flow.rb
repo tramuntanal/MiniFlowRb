@@ -14,6 +14,9 @@ require_relative 'mini_flow/forward_pass'
 require_relative 'mini_flow/backward_pass'
 require_relative 'mini_flow/sgd'
 
+
+require_relative 'mini_flow/model/base'
+
 require_relative 'mini_flow/examples/examples'
 
 module MiniFlow

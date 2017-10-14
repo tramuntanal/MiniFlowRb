@@ -4,7 +4,8 @@
 #
 require_relative 'mini_flow'
 
-if ARGV[0] == '--help'
+case ARGV[0]
+when '--help'
   puts <<EOHELP
 Runs MiniFlow's example model for the Housing Values in Suburbs of Boston data.
 Usage: ruby boston_housing_values.rb [options] [epochs]
@@ -15,10 +16,14 @@ Options:
 
 EOHELP
   exit
-elsif ARGV[0] == '--layers'
+when '--layers'
   puts "Example architecture to fit againts the Boston dataset:"
   puts MiniFlow::Examples::BostonModel::LAYERS
   exit
+when '--summary'
+  boston= MiniFlow::Examples.load_boston
+  puts "Columns for the Housing Values in Suburbs of Boston dataset:"
+  puts boston[:data].summary
 end
 
 epochs= ARGV[0] || 10
