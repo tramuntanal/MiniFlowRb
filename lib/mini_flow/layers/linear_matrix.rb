@@ -38,6 +38,8 @@ module MiniFlow
         w= @weights.value
         b= @bias.value
         @value= (x * w) + b
+      rescue ExceptionForMatrix::ErrDimensionMismatch => e
+        raise e, "#{x.dimensions} * #{w.dimensions} + #{b.dimensions} || #{e.message} > #{e.backtrace.first}"
       end
 
       # Calculates the gradient based on the output values
