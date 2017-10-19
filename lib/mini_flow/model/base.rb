@@ -34,23 +34,28 @@ module MiniFlow
         n_values= x_mtx.row_size
         batch_size= (n_values/epochs).to_i
         @losses= []
+        resampler= MiniFlow::Resampler.new
         epochs.times {|epoch|
           loss= 0
-            # Step 1
-            # Randomly sample a batch of examples
-            x_mtx_batch= resample(x_mtx, epoch, batch_size)
-            y_batch= resample(Matrix[y.to_a].transpose, epoch, batch_size)
+          # Step 1
+          # Randomly sample a batch of examples
+          x_mtx_batch, y_batch= resampler.resample_batch(
+            [x_mtx, Matrix[y.to_a].transpose],
+            iter: epoch,
+            batch_size: batch_size)
 
+          x_mtx_batch.to_a.zip(y_batch).each { |x, y|
             # Reset value of X and y Inputs
-            @x_mtx_input.value= x_mtx_batch
-            @y_input.value= y_batch
+            @x_mtx_input.value= Matrix.rows [x]
+            @y_input.value= Matrix.rows [y]
 
             # Step 2
             MiniFlow.forward_and_backward(@graph)
+          }
 
-            # Step 3
-            train
-            loss+= @cost_node.value.first
+          # Step 3
+          train
+          loss+= @cost_node.value.first
           @losses << loss
           puts("Epoch: #{epoch+1}, Loss:"+" %.3f" % (loss / batch_size))
         }

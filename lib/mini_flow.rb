@@ -13,6 +13,7 @@ require_relative 'mini_flow/topological_sort'
 require_relative 'mini_flow/forward_pass'
 require_relative 'mini_flow/backward_pass'
 require_relative 'mini_flow/sgd'
+require_relative 'mini_flow/resampler'
 
 
 require_relative 'mini_flow/model/base'

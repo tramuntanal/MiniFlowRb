@@ -5,14 +5,14 @@ module MiniFlow
       extend Forwardable
       # LAYERS serves as a documentation string.
       # Example Titanic Model layers:
-      LAYERS= <<EOLAYERS
-- Input: [506,13]
-- Linear: X[506,13], W[506,10], b[506]
-- Sigmoid: [506, 1]
-- Linear: X[506, 1], W[10,1], b[1]
-- Cost in: y[506, 1], a[506, 1]
-- Cost result: [1, 1]
-EOLAYERS
+      #      LAYERS= <<EOLAYERS
+      #- Input: [506,13]
+      #- Linear: X[506,13], W[506,10], b[506]
+      #- Sigmoid: [506, 1]
+      #- Linear: X[506, 1], W[10,1], b[1]
+      #- Cost in: y[506, 1], a[506, 1]
+      #- Cost result: [1, 1]
+      #EOLAYERS
 
       attr_reader :losses
       attr_reader :graph
@@ -34,7 +34,8 @@ EOLAYERS
 
         n_features= x_df.ncols
         n_values= x_df.nrows
-        batch_size= (n_values/epochs).to_i
+        #        batch_size= (n_values/epochs).to_i
+        batch_size= 1
         n_hidden= 128
         @model= Model::Base.new([batch_size, n_features])
         @model.dense(n_hidden)
