@@ -24,6 +24,10 @@ module MiniFlow
         @trainables= []
       end
 
+      #
+      # Once all layers have been configured though the Builder, the compile process
+      # sets all nodes ready for training.
+      #
       def compile(loss: :mse, optimizer: :sgd)
         @cost_node= self.loss(:mse)
         @feed_dict[@x_mtx_input]= nil
