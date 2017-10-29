@@ -79,10 +79,10 @@ module MiniFlow
       # remove first column
 #      data_frame.delete_vector('idx')
 
-      train_frame= Examples.load(File.join(File.dirname(__FILE__), 'titanic', 'test_features.csv'))
+      test_frame= Examples.load(File.join(File.dirname(__FILE__), 'titanic', 'test_features.csv'))
       # remove first column
 #      train_frame.delete_vector('idx')
-      {data: data_frame, train: train_frame}
+      {data: data_frame, test: test_frame}
     end
 
   end

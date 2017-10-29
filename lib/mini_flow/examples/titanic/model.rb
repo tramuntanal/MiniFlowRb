@@ -34,13 +34,14 @@ module MiniFlow
 
         n_features= x_df.ncols
         n_values= x_df.nrows
-        #        batch_size= (n_values/epochs).to_i
+#                batch_size= (n_values/epochs).to_i
         batch_size= 1
         n_hidden= 128
-        @model= Model::Base.new([batch_size, n_features])
+        @model= Model::Base.new([batch_size, n_features], learning_rate: 0.0001)
         @model.dense(n_hidden)
         @model.activation(:sigmoid)
         @model.dense(1)
+        @model.activation(:sigmoid)
         @model.compile(loss: :mse, optimizer: :sgd)
 
         puts("Total number of examples= #{n_values}")
