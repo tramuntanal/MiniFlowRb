@@ -36,9 +36,16 @@ model.fit(epochs: epochs.to_i)
 model.print_graph_arch
 
 titanic= MiniFlow::Examples.load_titanic
-x_df= titanic[:train]
+#test_df= titanic[:test]
 results= []
-x_df.each_row_with_index {|row, idx|
+#test_df.each_row_with_index {|row, idx|
+#  rs= model.predict(row.to_a).first
+#  results << rs
+#}
+#puts results
+
+data_df= titanic[:data]
+data_df[0..25].each_row_with_index {|row, idx|
   rs= model.predict(row.to_a).first
   results << rs
 }

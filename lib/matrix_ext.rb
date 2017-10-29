@@ -12,6 +12,7 @@ class Matrix
     [row_count, column_size]
   end
   alias_method :dimensions, :sizes
+  alias_method :shape, :sizes
 
   # @returns An array with the sums of the rows of the Matrix.
   def inner_row_sum
@@ -23,6 +24,12 @@ class Matrix
     arrays= to_a.transpose
     arrays.delete_at(idx)
     Matrix.rows(arrays.transpose)
+  end
+
+  def mult_elems(other)
+    Matrix.build(self.row_count, self.column_size) {|r,c|
+      self[r,c] * other[r,c]
+    }
   end
 end
 
