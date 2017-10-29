@@ -62,8 +62,9 @@ module MiniFlow
 
             expect(s.gradients.any?).to be true
             mtx= Matrix[
-              [-0.9996765057192436, -0.01798261048263196],
-              [-3.9457244883565608, -0.07097738732476089]]
+              [-0.00012336412542229922, -0.0179803913557421],
+              [-0.0004935021747168459, -0.07096850999561542]
+            ]
             input_grad= s.gradients[input]
             expect(input_grad).to eql(mtx)
           end

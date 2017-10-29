@@ -18,11 +18,12 @@ module MiniFlow
     class Sigmoid < Node
       # Sigmoid only accepts input from one node
       def initialize(input)
+        @input= input
         super([input])
       end
 
       def forward
-        @value= sigmoid(@previous_nodes.first.value)
+        @value= sigmoid(@input.value)
       end
 
       def backward
@@ -41,10 +42,11 @@ module MiniFlow
           # Set the gradients property to the gradients
           # with respect to each input.
           # Set the partial of the loss with respect to this layer's inputs.
-          input_value= @previous_nodes[0].value
+          input_value= @input.value
           s_mtx= sigmoid(input_value)
           ones_mtx= Matrix.build(s_mtx.row_count, s_mtx.column_size) {1}
-          @gradients[@previous_nodes[0]]+= grad_cost*(s_mtx.transpose*(ones_mtx-s_mtx))
+          diff_mtx= ones_mtx-s_mtx
+          @gradients[@input]+= s_mtx.mult_elems(diff_mtx.mult_elems(grad_cost))
         }
       end
 
