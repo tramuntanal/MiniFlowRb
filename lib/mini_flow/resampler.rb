@@ -2,6 +2,17 @@ module MiniFlow
   class Resampler
     
     #
+    # Extracts a randomized sample of elements of a list of structs. Being each
+    # struct, an Enumerable structure like an Array or a Matrix.
+    # 
+    # This is, given a number of structs it first determines the range of elements
+    # (this is the page or sample) and a list of random indices in this sample,
+    # and for each structure it extract the given page performs the same mix up of elements.
+    # 
+    # 
+    # The sample can be paginated, being +iter+ the page number and +batch_size+
+    # the number of elements per page.
+    #
     # Arguments
     # @param [structs] The structures to be resampled. Either Arrays or DataFrames.
     # @param [iter] defaults to 1. Is the iteration number starting at 1.
