@@ -20,14 +20,15 @@ module MiniFlow
 
         # Calculates the mean squared error.
         def forward
-          sum= 0
           raise TypeError.new("Incompatible types y:#{@y.value.class} vs a:#{@a.value.class}") unless @y.value.kind_of?(@a.value.class)
           case @y.value
           when Matrix
             @diffs= @y.value - @a.value
-            @sum= @diffs.transpose * @diffs
+            @sum= @diffs.collect {|e| e**2 }
+            @m= @y.value.row_count.to_f
           when Array, Vector
             @diffs= []
+            sum= 0
             @y.value.zip(@a.value).each do |y_val, a_val|
               diff= y_val - a_val
               sum+= diff ** 2
@@ -35,8 +36,8 @@ module MiniFlow
             end
             @sum= sum
             @diffs= Vector.elements(@diffs)
+            @m= @y.value.size.to_f
           end
-          @m= @y.value.size.to_f
           @value= (1.0/@m) * @sum
         end
 
