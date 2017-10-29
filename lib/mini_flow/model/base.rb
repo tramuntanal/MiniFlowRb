@@ -2,6 +2,9 @@ require_relative 'builder'
 
 module MiniFlow
   module Model
+    #
+    # Base DNN model. Encapsulates operations and data structures related with the model.
+    #
     class Base
       include Builder
 
@@ -9,10 +12,11 @@ module MiniFlow
       attr_reader :graph
       attr_reader :trainables
 
-      def initialize(input_shape)
+      def initialize(input_shape, learning_rate: 0.001)
         # The shape of the input for the following layer to be build.
         # Must be set at initialization. Then it is updated after adding a new layer
         @input_shapes= [input_shape]
+        @learning_rate= learning_rate
         @feed_dict= {}
         @layers= []
         @x_mtx_input, @y_input= Layers::Input.new(), Layers::Input.new()
@@ -44,7 +48,13 @@ module MiniFlow
             iter: epoch,
             batch_size: batch_size)
 
-          x_mtx_batch.to_a.zip(y_batch).each { |x, y|
+#            # Reset value of X and y Inputs
+#            @x_mtx_input.value= x_mtx_batch
+#            @y_input.value= y_batch
+#            # Step 2
+#            MiniFlow.forward_and_backward(@graph)
+
+          x_mtx_batch.to_a.zip(y_batch.to_a).each { |x, y|
             # Reset value of X and y Inputs
             @x_mtx_input.value= Matrix.rows [x]
             @y_input.value= Matrix.rows [y]
@@ -66,7 +76,7 @@ module MiniFlow
       end
 
       def train
-        MiniFlow.apply_sgd(@trainables, 0.0001)
+        MiniFlow.apply_sgd(@trainables, @learning_rate)
       end
 
       def predict(features)
@@ -74,6 +84,7 @@ module MiniFlow
         features_mtx= Matrix.build(input_shape.first, input_shape.last) {|r,c|
           features[c]
         }
+#        features_mtx= Matrix.rows [features]
         @x_mtx_input.value= features_mtx
         output_node= @output_layer
         MiniFlow.forward_pass(output_node, @graph)
