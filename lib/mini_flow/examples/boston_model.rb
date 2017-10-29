@@ -79,7 +79,7 @@ EOLAYERS
             MiniFlow.forward_and_backward(@graph)
 
             # Step 3
-            MiniFlow.apply_sgd(trainables)
+            MiniFlow.apply_sgd(trainables, 0.001)
             loss+= cost.value.first
           }
           @losses << loss
